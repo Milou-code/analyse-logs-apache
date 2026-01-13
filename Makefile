@@ -2,35 +2,39 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g
+# -Iinclude permet de trouver les fichiers .h dans le dossier include
+CXXFLAGS = -Wall -g -Iinclude
 
 # Target executable
 TARGET = analog
 
-# For deleting the target
-TARGET_DEL = analog.exe
+# Dossiers
+SRC_DIR = src
+OBJ_DIR = obj
 
-# Source files
-SRCS = main.cpp Stats.cpp Request.cpp RequestFilter.cpp Logstream.cpp
+# Source files (on cherche les fichiers dans src/)
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 
-# Object files
-OBJS = $(SRCS:.cpp=.o)
+# Object files (on place les .o dans le dossier obj/)
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-# Default rule to build and run the executable
-all: $(TARGET) run
+# Default rule
+all: $(TARGET)
 
 # Rule to link object files into the target executable
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Rule to compile .cpp files into .o files
-%.o: %.cpp
+# On crée le dossier obj s'il n'existe pas
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to run the executable
 run: $(TARGET)
-	$(TARGET)
+	./$(TARGET)
 
-# Clean rule to remove generated files
+# Clean rule
 clean:
-	del $(TARGET_DEL) $(OBJS)
+	rm -rf $(OBJ_DIR) $(TARGET)

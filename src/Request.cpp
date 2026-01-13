@@ -23,11 +23,11 @@ using namespace std;
 //} //----- Fin de Méthode
 
 //-------------------------------------------- Constructeurs - destructeur
-Request::Request(const string &anIP, const string aUserLogName,
-                 const string anAutentificatedUser, const string anAnswerLength,
-                 const string aBrowser, const string aDate, const string anHour,
-                 const string aRefererURL, const string aReturnCode,
-                 const string aTargetURL, const string anActionType)
+Request::Request(const string &anIP, const string &aUserLogName,
+                 const string &anAutentificatedUser, const string &anAnswerLength,
+                 const string &aBrowser, const string &aDate, const string &anHour,
+                 const string &aRefererURL, const string &aReturnCode,
+                 const string &aTargetURL, const string &anActionType)
     : IP(anIP), userLogname(aUserLogName),
       authentificatiedUser(anAutentificatedUser), answerLenght(anAnswerLength),
       browser(aBrowser), refererURL(aRefererURL), returnCode(aReturnCode),
@@ -39,6 +39,7 @@ Request::Request(const string &anIP, const string aUserLogName,
   cout << "Appel au constructeur de copie de <Xxx>" << endl;
 #endif
 }
+
 Request::~Request() {
 // Algorithme :
 //
