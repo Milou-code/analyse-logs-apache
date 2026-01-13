@@ -31,11 +31,11 @@ public:
   //
 
   //-------------------------------------------- Constructeurs - destructeur
-  Request(const string &anIP, const string aUserLogName,
-          const string anAutentificatedUser, const string anAnswerLength,
-          const string aBrowser, const string aDate, const string anHour,
-          const string aRefererURL, const string aReturnCode,
-          const string aTargetURL, const string anActionType);
+  Request(const string &anIP, const string &aUserLogName,
+          const string &anAutentificatedUser, const string &anAnswerLength,
+          const string &aBrowser, const string &aDate, const string &anHour,
+          const string &aRefererURL, const string &aReturnCode,
+          const string &aTargetURL, const string &anActionType);
   ~Request();
 
   // friend class declaration
