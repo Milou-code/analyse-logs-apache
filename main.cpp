@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "Logstream.h"
+#include "RequestFilter.h"
 
 using namespace std;
 
@@ -38,15 +38,8 @@ int main(int argc, char* argv[]) {
         cout << "Fichier : " << logFileName << " trouvé !" << endl;
     }
 
-    Logstream logFile;
-    logFile.open(logFileName);
-    string line;
-
-    // On parcourt toutes les lignes du fichier
-    while (getline(logFile, line)) {
-        if (line.empty()) continue; // Si la ligne est vide on la saute
-        logFile.NextLog(line);
-    }
+    RequestFilter filter(logFileName, dotFileName, makeGraph, excludeImages, hourFilter);
+    filter.browseFile();
 
     return 0;
 }

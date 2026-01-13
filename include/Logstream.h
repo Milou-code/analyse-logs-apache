@@ -30,7 +30,7 @@ public:
     // Contrat :
     //
 
-    void NextLog(const std::string& logLine);
+    Request NextLog(const std::string& logLine);
     // Mode d'emploi :
     // créer un objet Requete à partir d'une ligne de Log
 

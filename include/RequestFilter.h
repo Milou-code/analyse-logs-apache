@@ -1,10 +1,11 @@
 /*************************************************************************
-                           RequestFilter  -  description
+                           RequestFilter - description
                              -------------------
     début                : $13/01/2026$
     copyright            : (C) $2026$ par $aeliasmene$
     e-mail               : $alexandre.elias-menet@insa-lyon.fr$
 *************************************************************************/
+
 
 #if ! defined ( REQUESTFILTER_H )
 #define REQUESTFILTER_H
@@ -12,8 +13,9 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
-#include <string>
-using namespace std;
+#include <string> // Pour std::string
+#include "Request.h"
+#include "Stats.h" // Pour la classe Stats
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -36,23 +38,23 @@ public:
     // Contrat :
     //
 
+    void browseFile();
+    // Mode d'emploi : 
+    // Cette méthode parcourt le fichier logNameFile
 
-    bool IsForbidenFile(const string url);
+    bool IsForbiddenFile(const std::string & url) const;
     // Mode d'emploi : 
     //
 
-
-    void AddRequest(const Request RequestToFilter) const;
+    void AddRequest(const Request & requestToFilter); // Suppression de 'const'
     // Mode d'emploi : 
-    //
-
-    
+    //  
 
 //-------------------------------------------- Constructeurs - destructeur
-    RequestFilter(const bool ExtensionFilter, const int hourfilter) : filter(typefilter), hour(hourfilter){};
+    RequestFilter(const string & logFileName, const string & dotFileName, const bool graphFilter = false, const bool imageFilter = false, const int hourFilter = -1) : statistics(), logFileName(logFileName), dotFileName(dotFileName), makeGraph(graphFilter), excludeImages(imageFilter), hour(hourFilter) {};
     // Mode d'emploi :
     //
-    // Contrat :
+    // Contrat : Le constructeur initialise les attributs de filtrage et l'objet Stats.
     //
 
     virtual ~RequestFilter ();
@@ -65,7 +67,13 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    bool ExtensionFilter;
+    Stats statistics;
+    string logFileName;
+    string dotFileName;
+    
+    // Filters
+    bool makeGraph;
+    bool excludeImages;
     int hour;
 //----------------------------------------------------- Attributs protégés
 
