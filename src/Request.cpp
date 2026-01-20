@@ -44,9 +44,25 @@ Request::~Request() {
 // Algorithme :
 //
 #ifdef MAP
-  cout << "Appel au destructeur de <Xxx>" << endl;
+  cout << "Appel au destructeur de <Request>" << endl;
 #endif
-} //----- Fin de ~Xxx
+} //----- Fin de Request
+
+//------------------------------------------------- Surcharge d'opérateurs
+std::ostream &operator<<(std::ostream &os, const Request &request) {
+  os << "IP: " << request.IP << std::endl
+     << "User Logname: " << request.userLogname << std::endl
+     << "Authenticated User: " << request.authentificatiedUser << std::endl
+     << "Answer Length: " << request.answerLenght << std::endl
+     << "Browser: " << request.browser << std::endl
+     << "Date: " << request.date << std::endl
+     << "Hour: " << request.hour << std::endl
+     << "Referer URL: " << request.refererURL << std::endl
+     << "Return Code: " << request.returnCode << std::endl
+     << "Target URL: " << request.targetURL << std::endl
+     << "Action Type: " << request.actionType;
+  return os;
+}
 
 //------------------------------------------------------------------ PRIVE
 
