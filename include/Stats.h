@@ -25,7 +25,7 @@ class Stats
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    void CreateGraph() const;
+    void CreateGraph(const std::string& dotFileName) const;
 
     void Top10() const;
 

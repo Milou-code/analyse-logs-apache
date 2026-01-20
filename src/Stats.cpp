@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <set>
 
 //------------------------------------------------------ Include personnel
 #include "Stats.h"
@@ -16,8 +18,56 @@
 
 //----------------------------------------------------------------- PUBLIC
 
-void Stats::CreateGraph() const{
-// tkt
+void Stats::CreateGraph(const std::string& dotFileName) const{
+    std::string filePath = "graphes/" + dotFileName + ".dot";
+    std::streambuf* coutBuffer = std::cout.rdbuf(); //sert à sauvegarder pour réutiliser le terminal plus tard
+    std::ofstream dotFile(filePath);
+    std::cout.rdbuf(dotFile.rdbuf());
+    
+    std::cout << "digraph {" << std::endl;
+    
+    std::set<std::string> allNodes; //set permet de ne pas garder les doublons
+    
+    for (const auto& targetPair : targetCollection)
+    {
+        const std::string& targetURL = targetPair.first;
+        allNodes.insert(targetURL); //on ajoute toutes les targets dans les noeuds du graphe
+        
+        const std::map<std::string, int>& refererMap = targetPair.second;
+        for (const auto& refererPair : refererMap) 
+        {
+            allNodes.insert(refererPair.first); //on ajoute tous les referers dans les noeuds du graphe
+        }
+    }
+    
+   
+    for (const auto& node : allNodes)
+    {
+        std::cout << "\t\"" << node << "\";" << std::endl; //on écrit les noeuds dans le fichier .dot
+    }
+    
+    // Créer tous les arcs avec leurs labels
+    for (const auto& targetPair : targetCollection)
+    {
+        const std::string& targetURL = targetPair.first;
+        const std::map<std::string, int>& refererMap = targetPair.second;
+        
+        for (const auto& refererPair : refererMap)
+        {
+            const std::string& refererURL = refererPair.first;
+            int hitCount = refererPair.second;
+            
+            std::cout << "\t\"" << refererURL << "\" -> \"" << targetURL 
+                    << "\" [label=\"" << hitCount << "\"];" << std::endl;
+        }
+    }
+    
+    dotFile << "}" << std::endl;
+    
+    dotFile.close();
+    
+    std::cout.rdbuf(coutBuffer); //redirige pour écrire dans le terminal
+    std::cout << "Fichier .dot créé (dans le répertoire graphes): " << filePath << std::endl;
 } //----- Fin de CreateGraph
 
 
