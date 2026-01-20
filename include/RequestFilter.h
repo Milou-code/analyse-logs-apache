@@ -51,7 +51,7 @@ public:
     //  
 
 //-------------------------------------------- Constructeurs - destructeur
-    RequestFilter(const string & logFileName, const string & dotFileName, const bool graphFilter = false, const bool imageFilter = false, const int hourFilter = -1) : statistics(), logFileName(logFileName), dotFileName(dotFileName), makeGraph(graphFilter), excludeImages(imageFilter), hour(hourFilter) {};
+    RequestFilter(const string & logFileName, const string & dotFileName, const bool graphFilter = false, const bool imageFilter = false, const int hourFilter = -1);
     // Mode d'emploi :
     //
     // Contrat : Le constructeur initialise les attributs de filtrage et l'objet Stats.
