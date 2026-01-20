@@ -54,7 +54,7 @@ void RequestFilter::browseFile()
             cout << "Erreur : Vous n'avez pas sécifié de nom de fichier pour le graphe" << endl;
         }
         else {
-            statistics.CreateGraph();
+            statistics.CreateGraph(dotFileName);
         }
     }
 
