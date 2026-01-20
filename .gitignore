@@ -1,5 +1,5 @@
 /obj
 analog
 /graphes
-/tests/results.csv
 /bin
+*.csv
