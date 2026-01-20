@@ -40,6 +40,9 @@ public:
 
   // friend class declaration
   friend class RequestFilter;
+  // Surcharge de l'opérateur de flux de sortie
+  friend std::ostream &operator<<(std::ostream &os, const Request &request);
+  
   //------------------------------------------------------------------ PRIVE
 
 protected:

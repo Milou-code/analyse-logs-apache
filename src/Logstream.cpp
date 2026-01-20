@@ -40,25 +40,25 @@ Request Logstream::NextLog(const string& logLine)
     size_t currentPos = 0;
     size_t nextPos;
 
-    // 1. Adresse IP (%h)
+    // 1. Adresse IP
     nextPos = logLine.find(' ', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", ""); // Ligne malformée
     ip = logLine.substr(currentPos, nextPos - currentPos);
     currentPos = nextPos + 1;
 
-    // 2. Nom d'utilisateur distant (%l) - souvent '-'
+    // 2. Nom d'utilisateur distant souvent '-'
     nextPos = logLine.find(' ', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     userLogname = logLine.substr(currentPos, nextPos - currentPos);
     currentPos = nextPos + 1;
 
-    // 3. Utilisateur authentifié (%u) - souvent '-'
+    // 3. Utilisateur authentifié souvent '-'
     nextPos = logLine.find(' ', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     authentificatedUser = logLine.substr(currentPos, nextPos - currentPos);
     currentPos = nextPos + 1;
 
-    // 4. Date et Heure (%t) - entre crochets []
+    // 4. Date et Heure entre crochets []
     nextPos = logLine.find('[', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     currentPos = nextPos + 1;
@@ -79,7 +79,7 @@ Request Logstream::NextLog(const string& logLine)
         hourPart = "-1"; // Indiquer une heure inconnue
     }
 
-    // 5. Ligne de Requête ("%r") - entre guillemets ""
+    // 5. Ligne de Requête entre guillemets ""
     nextPos = logLine.find('"', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     currentPos = nextPos + 1;
@@ -93,21 +93,20 @@ Request Logstream::NextLog(const string& logLine)
     string actionTypePart;
     string targetURLPart;
     requestIss >> actionTypePart >> targetURLPart;
-    // La version HTTP est souvent la troisième partie, mais n'est pas nécessaire pour le constructeur Request
 
-    // 6. Code de Statut (%>s)
+    // 6. Code de Statut
     nextPos = logLine.find(' ', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     returnCode = logLine.substr(currentPos, nextPos - currentPos);
     currentPos = nextPos + 1;
 
-    // 7. Taille de la Réponse (%b)
+    // 7. Taille de la Réponse
     nextPos = logLine.find(' ', currentPos);
     if (nextPos == string::npos) return Request("", "", "", "", "", "", "", "", "", "", "");
     answerLength = logLine.substr(currentPos, nextPos - currentPos);
     currentPos = nextPos + 1;
 
-    // 8. Référent ("%{Referer}i") - entre guillemets ""
+    // 8. Référent entre guillemets ""
     nextPos = logLine.find('"', currentPos);
     if (nextPos == string::npos) refererURL = "-"; // Le référent peut être vide ou malformé
     else {
@@ -120,7 +119,7 @@ Request Logstream::NextLog(const string& logLine)
         }
     }
 
-    // 9. Agent Utilisateur ("%{User-agent}i") - entre guillemets "" (prend le reste de la ligne)
+    // 9. Agent Utilisateur entre guillemets "" (prend le reste de la ligne)
     // On cherche le prochain guillemet pour le début de l'User-Agent
     nextPos = logLine.find('"', currentPos);
     if (nextPos == string::npos) browser = "-"; // L'User-Agent peut être vide ou malformé
