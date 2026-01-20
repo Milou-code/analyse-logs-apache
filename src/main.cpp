@@ -35,9 +35,7 @@ int main(int argc, char* argv[]) {
         cout << "Erreur : Aucun fichier log spécifié." << endl;
         return 1;
     }
-    else{
-        cout << "Fichier : " << logFileName << " trouvé !" << endl;
-    }
+
 
     RequestFilter filter(logFileName, dotFileName, makeGraph, excludeImages, hourFilter);
     filter.browseFile();
