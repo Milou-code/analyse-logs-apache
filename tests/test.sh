@@ -88,12 +88,14 @@ then
   then
     echo "                                       Stdout      : PASSED"
     resultOut=1
-  else
-    echo "                                       Stdout      : FAILED"
-    resultOut=0
-    resultGlobal=0
-  fi
-  # clean temporary out file
+else
+  echo "                                       Stdout      : FAILED"
+  echo "                                       ---- diff stdout ----"
+  diff -u std.out temp.txt
+  echo "                                       ---------------------"
+  resultOut=0
+  resultGlobal=0
+fi  # clean temporary out file
   rm temp.txt
 fi
 
