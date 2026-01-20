@@ -98,7 +98,9 @@ void Stats::Top10() const{
     
     std::sort(sortedHits.begin(), sortedHits.end(), // on trie les URL par ordre décroissant de hits
               [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
-                  return a.second > b.second; 
+                if (a.second != b.second) 
+                    return a.second > b.second; //hits décroissants
+                return a.first < b.first;       //ordre alphabétique
               });
     
     int rank = 1;
