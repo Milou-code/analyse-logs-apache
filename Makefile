@@ -6,7 +6,7 @@ CXX = g++
 CXXFLAGS = -Wall -g -Iinclude
 
 # Target executable
-TARGET = analog
+TARGET = bin/analog
 
 # Dossiers
 SRC_DIR = src
@@ -14,6 +14,7 @@ OBJ_DIR = obj
 
 # Source files (on cherche les fichiers dans src/)
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+BIN_DIR = bin
 
 # Object files (on place les .o dans le dossier obj/)
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
@@ -23,6 +24,7 @@ all: $(TARGET)
 
 # Rule to link object files into the target executable
 $(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 # Rule to compile .cpp files into .o files
@@ -31,10 +33,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+
 # Rule to run the executable
 run: $(TARGET)
-	./$(TARGET)
+	$(TARGET)
 
 # Clean rule
 clean:
-	rm -rf $(OBJ_DIR) $(TARGET)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
