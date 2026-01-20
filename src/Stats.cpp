@@ -19,7 +19,7 @@
 //----------------------------------------------------------------- PUBLIC
 
 void Stats::CreateGraph(const std::string& dotFileName) const{
-    std::string filePath = "graphes/" + dotFileName + ".dot";
+    std::string filePath = "graphes/" + dotFileName;
     std::streambuf* coutBuffer = std::cout.rdbuf(); //sert à sauvegarder pour réutiliser le terminal plus tard
     std::ofstream dotFile(filePath);
     std::cout.rdbuf(dotFile.rdbuf());
@@ -101,15 +101,12 @@ void Stats::Top10() const{
                   return a.second > b.second; 
               });
     
-    std::cout << "------------------- Classement des 10 sites les plus populaires -------------------" << std::endl;
-    
     int rank = 1;
     int limit = (sortedHits.size() < 10) ? sortedHits.size() : 10;
     
     for (int i = 0; i < limit; i++)
     {
-        std::cout << "n°" << rank << " : " << sortedHits[i].first 
-                  << " - " << sortedHits[i].second << " visites" << std::endl;
+        std::cout << sortedHits[i].first << " (" << sortedHits[i].second << " hits)" << std::endl;
         rank++;
     }
     
