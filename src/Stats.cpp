@@ -19,7 +19,7 @@
 //----------------------------------------------------------------- PUBLIC
 
 void Stats::CreateGraph(const std::string& dotFileName) const{
-    std::string filePath = "graphes/" + dotFileName;
+    std::string filePath = "../graphes/" + dotFileName;
     std::streambuf* coutBuffer = std::cout.rdbuf(); //sert à sauvegarder pour réutiliser le terminal plus tard
     std::ofstream dotFile(filePath);
     std::cout.rdbuf(dotFile.rdbuf());
@@ -43,7 +43,7 @@ void Stats::CreateGraph(const std::string& dotFileName) const{
    
     for (const auto& node : allNodes)
     {
-        std::cout << "\t\"" << node << "\";" << std::endl; //on écrit les noeuds dans le fichier .dot
+        std::cout << "\t" << node << ";" << std::endl; //on écrit les noeuds dans le fichier .dot
     }
     
     // Créer tous les arcs avec leurs labels
@@ -58,7 +58,8 @@ void Stats::CreateGraph(const std::string& dotFileName) const{
             int hitCount = refererPair.second;
             
             std::cout << "\t\"" << refererURL << "\" -> \"" << targetURL 
-                    << "\" [label=\"" << hitCount << "\"];" << std::endl;
+            << "\" [label=\"" << hitCount << "\"];" << std::endl;
+
         }
     }
     
