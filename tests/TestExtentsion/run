@@ -1,1 +1,1 @@
-../../bin/analog ../../exemple-mini-non-exhaustif.log -e
+../../bin/analog ../../logs/exemple-mini-non-exhaustif.log -e
