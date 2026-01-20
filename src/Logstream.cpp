@@ -3,7 +3,6 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -11,6 +10,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Logstream.h"
 #include "Request.h"
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
@@ -116,6 +116,26 @@ Request Logstream::NextLog(const string& logLine)
         else {
             refererURL = logLine.substr(currentPos, nextPos - currentPos);
             currentPos = nextPos + 2; // Passer '"' et l'espace
+        }
+
+        // Extraire seulement le chemin de l'URL du référent
+        if (refererURL != "-") {
+            size_t protocol_end = refererURL.find("://");
+            size_t path_start = std::string::npos;
+
+            if (protocol_end != std::string::npos) {
+                // Si un protocole est trouvé, chercher le chemin après le nom de domaine
+                path_start = refererURL.find('/', protocol_end + 3);
+            } else {
+                // Pas de protocole, chercher le chemin depuis le début
+                path_start = refererURL.find('/');
+            }
+
+            if (path_start != std::string::npos) {
+                refererURL = refererURL.substr(path_start);
+            } else if (refererURL != "-") { // Si pas de chemin trouvé et ce n'est pas "-", alors c'est la racine
+                refererURL = "/";
+            }
         }
     }
 
