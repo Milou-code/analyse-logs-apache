@@ -1,0 +1,1 @@
+../../bin/analog -g graphtest.dot ../../logs/exemple-mini-non-exhaustif.log
