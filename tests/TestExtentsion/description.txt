@@ -1,0 +1,1 @@
+Ce test permet de vérifier le bon fonctionnement du filtre sur les extensions de fichiers.
