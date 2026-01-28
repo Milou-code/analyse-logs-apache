@@ -42,10 +42,11 @@ void Stats::CreateGraph(const std::string &dotFileName) const {
               .first); // on ajoute tous les referers dans les noeuds du graphe
     }
   }
-
+  std::map<std::string,std::string> NodeNames; // map pour stocker les noms des noeuds dans le fichier .dot
+  int nodeIndex=0;
   for (const auto &node : allNodes) {
-    std::cout << "\t" << node << ";"
-              << std::endl; // on écrit les noeuds dans le fichier .dot
+    NodeNames[node]= "node"+std::to_string(nodeIndex++);
+    std::cout << "\t" << NodeNames[node] << " [label = \"" << node << "\"]" << ";" << std::endl; // on écrit les noeuds dans le fichier .dot
   }
 
   // Créer tous les arcs avec leurs labels
@@ -57,7 +58,7 @@ void Stats::CreateGraph(const std::string &dotFileName) const {
       const std::string &refererURL = refererPair.first;
       int hitCount = refererPair.second;
 
-      std::cout << "\t" << refererURL << " -> " << targetURL << " [label=\""
+      std::cout << "\t" << NodeNames[refererURL] << " -> " << NodeNames[targetURL] << " [label=\""
                 << hitCount << "\"];" << std::endl;
     }
   }
