@@ -86,16 +86,16 @@ void Stats::Top10() const {
     totalHits[targetURL] = sum;
   }
 
-  vector<std::pair<std::string, int>> sortedHits;
+  vector<pair<string, int>> sortedHits;
 
   for (const pair<const string, int> &pair : totalHits) {
     sortedHits.push_back(pair);
   }
 
-  std::sort(sortedHits.begin(),
+  sort(sortedHits.begin(),
             sortedHits.end(), // on trie les URL par ordre décroissant de hits
-            [](const std::pair<std::string, int> &a,
-               const std::pair<std::string, int> &b) {
+            [](const pair<string, int> &a,
+               const pair<string, int> &b) {
               if (a.second != b.second)
                 return a.second > b.second; // hits décroissants
               return a.first < b.first;     // ordre alphabétique
@@ -105,26 +105,26 @@ void Stats::Top10() const {
   int limit = (sortedHits.size() < 10) ? sortedHits.size() : 10;
 
   for (int i = 0; i < limit; i++) {
-    std::cout << sortedHits[i].first << " (" << sortedHits[i].second << " hits)"
-              << std::endl;
+    cout << sortedHits[i].first << " (" << sortedHits[i].second << " hits)"
+              << endl;
     rank++;
   }
 
 } //----- Fin de Top10
 
-void Stats::AddRequest(const std::string &refererURL,
-                       const std::string &targetURL) {
+void Stats::AddRequest(const string &refererURL,
+                       const string &targetURL) {
   {
     if (targetCollection.find(targetURL) ==
         targetCollection.end()) // target n'existe pas encore
     {
-      std::map<std::string, int> newRefererMap;
+      map<string, int> newRefererMap;
       newRefererMap[refererURL] = 1;
       targetCollection[targetURL] = newRefererMap;
     }
 
     else {
-      std::map<std::string, int> &refererMap = targetCollection[targetURL];
+      map<string, int> &refererMap = targetCollection[targetURL];
 
       if (refererMap.find(refererURL) == refererMap.end()) // referer n'existe pas encore pour cette cible
       {
