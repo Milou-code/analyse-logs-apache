@@ -127,18 +127,18 @@ then
     fileName=`basename $i .outfile`
     if [ -r $fileName ]
     then
-      diff -wB $i $fileName
-      if [ $? -eq 0 ]
-      then
-        echo "                                       File #$number     : PASSED"
-      else
-        echo "                                       File #$number     : FAILED"
-        resultFiles=0
-        resultGlobal=0
-      fi  
-      rm $fileName
-    else  
-      echo "                                       File #$number     : FAILED"
+ if diff -u "$i" "$fileName" >/dev/null
+then
+  echo "                                       File #$number     : PASSED"
+else
+  echo "                                       File #$number     : FAILED"
+  echo "                                       ---- diff file ----"
+  diff -u "$i" "$fileName"   # Affiche le diff lisible
+  echo "                                       -------------------"
+  resultFiles=0
+  resultGlobal=0
+fi    else  
+      echo "                                       File #$number     : FAILED EXPECTED FILE MISSING"
       resultFiles=0
       resultGlobal=0
     fi

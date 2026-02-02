@@ -1,0 +1,1 @@
+../../bin/analog -g graph.dot ../../logs/exemple-mini-non-exhaustif.log
