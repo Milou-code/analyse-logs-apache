@@ -1,0 +1,1 @@
+Ce test permet de vérifier que l'application n'exécute rien quand il y a au moins un caractère invalide même s'il y a des options valides (par exemple un x qui traîne au milieu de la ligne de commande). 

@@ -1,0 +1,1 @@
+Ce test permet de vérifier que l'application n'exécute rien quand il y a au moins une option invalide (même s'il y a d'autres options invalides), par exemple quand on met -w.
