@@ -1,0 +1,1 @@
+Ce test permet de vérifier que la création du graph avec exclusion des types : images css et java, marche bien. Attention il faut que le fichier créé et le fichier attendu aient le même nom.
