@@ -1,8 +1,8 @@
 Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
 TestDefaut;2;1;2;2;1
 TestExcludeGraph;2;2;2;1;1
+TestExcludeHeure;2;1;2;2;1
 TestExcludeImage;2;1;2;2;1
-TestExtentsion;2;1;2;2;1
 TestGraph;2;2;2;1;1
 TestHeure;2;1;2;2;1
 TestMalforme;2;1;2;2;1
