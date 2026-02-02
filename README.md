@@ -10,6 +10,7 @@ L'objectif principal est de fournir des statistiques de consultation et de visua
 * **Filtrage horaire (`-t`)** : Permet de restreindre l'analyse aux requêtes effectuées dans un créneau d'une heure spécifique (ex: entre 11h et 12h).
 * **Exclusion des ressources statiques (`-e`)** : Ignore les fichiers de type images (`.jpg`, `.png`), les feuilles de style (`.css`) et les scripts Javascript (`.js`) pour se concentrer sur les pages HTML.
 * **Génération de graphes (`-g`)** : Produit un fichier au format GraphViz (`.dot`) représentant les relations entre les referers et les URLs cibles.
+* **Création d’un PNG du graphe** : Afin de visualiser le graphe créé précédemment, il sera possible de générer une version au format PNG.
 
 ## Architecture logicielle
 Le projet s'appuie sur une conception orientée objet :
@@ -33,6 +34,8 @@ make
     `./bin/analog -t 11 logs/test.log`
 * **Exclusion d'images et génération de graphe** :  
     `./bin/analog -e -g mon_graphe.dot logs/test.log`
+* **Création d’un PNG du graphe** :
+`dot -Tpng -o graph.png mon_graph.dot`
 
 ## Tests
 
