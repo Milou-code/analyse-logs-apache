@@ -11,6 +11,7 @@ int main(int argc, char* argv[]) {
     string dotFileName;
     bool excludeImages = false;
     int hourFilter = -1;
+    bool logFileFound = false;
 
     // Analyse des arguments (on commence à i = 1 car argv[0] est le nom du programme)
     for (int i = 1; i < argc; i++) {
@@ -26,16 +27,21 @@ int main(int argc, char* argv[]) {
         else if (arg == "-t" && i + 1 < argc) {
             hourFilter = stoi(argv[++i]);
         }
+        else if (arg[0] == '-') {
+            cerr << "Erreur : Option invalide '" << arg << "', commande non exécutée. " << endl;
+            // Rien est exécuté même s'il y a d'autres options valides
+            return 1;
+        }
         else {
+            if (logFileFound) {
+                // Un fichier log a déjà été trouvé, donc cet argument est en trop
+                cerr << "Erreur : Caractère inattendu dans l'exécution, commande non exécutée. " << endl;
+                return 1;
+            }
             logFileName = arg;
+            logFileFound = true;
         }
     }
-
-    if (logFileName.empty()) {
-        cout << "Erreur : Aucun fichier log spécifié." << endl;
-        return 1;
-    }
-
 
     RequestFilter filter(logFileName, dotFileName, makeGraph, excludeImages, hourFilter);
     filter.browseFile();
