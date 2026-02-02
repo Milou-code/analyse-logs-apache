@@ -14,75 +14,76 @@
 //------------------------------------------------------ Include personnel
 #include "Stats.h"
 
+using namespace std;
+
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
-void Stats::CreateGraph(const std::string& dotFileName) const{
-    std::string filePath = "../graphes/" + dotFileName;
-    std::streambuf* coutBuffer = std::cout.rdbuf(); //sert à sauvegarder pour réutiliser le terminal plus tard
-    std::ofstream dotFile(filePath);
-    std::cout.rdbuf(dotFile.rdbuf());
+void Stats::CreateGraph(const string& dotFileName) const{
+    string filePath = "../graphes/" + dotFileName;
+    streambuf* coutBuffer = cout.rdbuf(); //sert à sauvegarder pour réutiliser le terminal plus tard
+    ofstream dotFile(filePath);
+    cout.rdbuf(dotFile.rdbuf());
     
-    std::cout << "digraph {" << std::endl;
+    cout << "digraph {" << endl;
     
-    std::set<std::string> allNodes; //set permet de ne pas garder les doublons
+    set<string> allNodes; //set permet de ne pas garder les doublons
     
-    for (const auto& targetPair : targetCollection)
+    for (const pair<const string, map<string, int>>& targetPair : targetCollection)
     {
-        const std::string& targetURL = targetPair.first;
+        const string& targetURL = targetPair.first;
         allNodes.insert(targetURL); //on ajoute toutes les targets dans les noeuds du graphe
         
-        const std::map<std::string, int>& refererMap = targetPair.second;
-        for (const auto& refererPair : refererMap) 
+        const map<string, int>& refererMap = targetPair.second;
+        for (const pair<const string, int>& refererPair : refererMap) 
         {
             allNodes.insert(refererPair.first); //on ajoute tous les referers dans les noeuds du graphe
         }
     }
     
    
-    for (const auto& node : allNodes)
+    for (const string& node : allNodes)
     {
-        std::cout << "\t" << node << ";" << std::endl; //on écrit les noeuds dans le fichier .dot
+        cout << "\t" << node << ";" << endl; //on écrit les noeuds dans le fichier .dot
     }
     
     // Créer tous les arcs avec leurs labels
-    for (const auto& targetPair : targetCollection)
+    for (const pair<const string, map<string, int>>& targetPair : targetCollection)
     {
-        const std::string& targetURL = targetPair.first;
-        const std::map<std::string, int>& refererMap = targetPair.second;
+        const string& targetURL = targetPair.first;
+        const map<string, int>& refererMap = targetPair.second;
         
-        for (const auto& refererPair : refererMap)
+        for (const pair<const string, int>& refererPair : refererMap)
         {
-            const std::string& refererURL = refererPair.first;
+            const string& refererURL = refererPair.first;
             int hitCount = refererPair.second;
             
-            std::cout << "\t\"" << refererURL << "\" -> \"" << targetURL 
-            << "\" [label=\"" << hitCount << "\"];" << std::endl;
+            cout << "\t\"" << refererURL << "\" -> \"" << targetURL 
+            << "\" [label=\"" << hitCount << "\"];" << endl;
 
         }
     }
     
-    dotFile << "}" << std::endl;
+    dotFile << "}" << endl;
     
     dotFile.close();
     
-    std::cout.rdbuf(coutBuffer); //redirige pour écrire dans le terminal
-    std::cout << "Fichier .dot créé (dans le répertoire graphes): " << filePath << std::endl;
+    cout.rdbuf(coutBuffer); //redirige pour écrire dans le terminal
 } //----- Fin de CreateGraph
 
 
 void Stats::Top10() const{
  
-    std::map<std::string, int> totalHits; // création d'une MAP avec le nombre de hits par target
+    map<string, int> totalHits; // création d'une MAP avec le nombre de hits par target
     
-    for (const auto& targetPair : targetCollection)
+    for (const pair<const string, map<string, int>>& targetPair : targetCollection)
     {
-        const std::string& targetURL = targetPair.first;
-        const std::map<std::string, int>& refererMap = targetPair.second;
+        const string& targetURL = targetPair.first;
+        const map<string, int>& refererMap = targetPair.second;
         
         int sum = 0;
-        for (const auto& refererPair : refererMap)
+        for (const pair<const string, int>& refererPair : refererMap)
         {
             sum += refererPair.second; 
         }
@@ -90,15 +91,15 @@ void Stats::Top10() const{
         totalHits[targetURL] = sum;
     }
     
-    std::vector<std::pair<std::string, int>> sortedHits;
+    vector<pair<string, int>> sortedHits;
     
-    for (const auto& pair : totalHits)
+    for (const pair<const string, int>& pair : totalHits)
     {
         sortedHits.push_back(pair); 
     }
     
-    std::sort(sortedHits.begin(), sortedHits.end(), // on trie les URL par ordre décroissant de hits
-              [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+    sort(sortedHits.begin(), sortedHits.end(), // on trie les URL par ordre décroissant de hits
+              [](const pair<string, int>& a, const pair<string, int>& b) {
                 if (a.second != b.second) 
                     return a.second > b.second; //hits décroissants
                 return a.first < b.first;       //ordre alphabétique
@@ -109,7 +110,7 @@ void Stats::Top10() const{
     
     for (int i = 0; i < limit; i++)
     {
-        std::cout << sortedHits[i].first << " (" << sortedHits[i].second << " hits)" << std::endl;
+        cout << sortedHits[i].first << " (" << sortedHits[i].second << " hits)" << endl;
         rank++;
     }
     
@@ -117,18 +118,18 @@ void Stats::Top10() const{
 
 
 
-void Stats::AddRequest(const std::string& refererURL, const std::string& targetURL){
+void Stats::AddRequest(const string& refererURL, const string& targetURL){
 {
     if (targetCollection.find(targetURL) == targetCollection.end())  //target n'existe pas encore
     {
-        std::map<std::string, int> newRefererMap;
+        map<string, int> newRefererMap;
         newRefererMap[refererURL] = 1;
         targetCollection[targetURL] = newRefererMap;
     }
 
     else
     {
-        std::map<std::string, int>& refererMap = targetCollection[targetURL]; 
+        map<string, int>& refererMap = targetCollection[targetURL]; 
         
         if (refererMap.find(refererURL) == refererMap.end()) //referer n'existe pas encore pour cette cible
         {
