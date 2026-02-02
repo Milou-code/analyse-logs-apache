@@ -1,1 +1,1 @@
-Ce test permet de vérifier le bon fonctionnement du filtre sur les extensions de fichiers.
+Ce test permet de vérifier le bon fonctionnement du filtre pour les extentions image, css et java et du filtre horaire.
