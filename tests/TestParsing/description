@@ -1,0 +1,5 @@
+Vérifie le parsing complet d'une ligne de log :
+- Extraction de l'URL cible avec paramètres complexes (?id=...&ref=...).
+- Nettoyage du referer : suppression du protocole (https://) et du nom de domaine.
+- Gestion des referers externes (moteurs de recherche) et internes.
+- Gestion des accès directs (referer "-").

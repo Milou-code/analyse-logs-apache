@@ -43,8 +43,16 @@ void RequestFilter::browseFile()
 
     // On parcourt toutes les lignes du fichier
     while (getline(logFile, line)) {
-        if (line.empty()) continue; // Si la ligne est vide on la saute
+        if (line.empty()) continue; // Gère le cas ou la ligne est vide
+
         Request request = logFile.NextLog(line);
+
+        // Vérification de la validité globale de la requête
+        // Si l'URL est "-" ou vide, on ignore.
+        if (request.targetURL.empty() || request.targetURL == "-") {
+            continue;
+        }
+
         AddRequest(request);
     }
 
