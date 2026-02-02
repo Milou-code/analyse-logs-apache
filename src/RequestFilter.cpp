@@ -72,7 +72,7 @@ void RequestFilter::browseFile()
 
 bool RequestFilter::IsForbiddenFile(const string& url) const
 {
-    static const string extensions[] = { ".jpg", ".png", ".css", ".js"};
+    static const string extensions[] = { ".jpeg", ".gif", ".jpg", ".png", ".css", ".js"};
 
     for (const string & ext : extensions)
     {
