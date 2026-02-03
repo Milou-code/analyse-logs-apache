@@ -28,14 +28,14 @@ int main(int argc, char* argv[]) {
             hourFilter = stoi(argv[++i]);
         }
         else if (arg[0] == '-') {
-            cerr << "Erreur : Option invalide '" << arg << "', commande non exécutée. " << endl;
+            cout << "Erreur : Option invalide '" << arg << "', commande non exécutée. " << endl;
             // Rien est exécuté même s'il y a d'autres options valides
             return 1;
         }
         else {
             if (logFileFound) {
                 // Un fichier log a déjà été trouvé, donc cet argument est en trop
-                cerr << "Erreur : Caractère inattendu dans l'exécution, commande non exécutée. " << endl;
+                cout << "Erreur : Caractère inattendu dans l'exécution, commande non exécutée. " << endl;
                 return 1;
             }
             logFileName = arg;
