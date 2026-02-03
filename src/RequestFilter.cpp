@@ -33,6 +33,9 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+/**
+ * Parcourt le fichier de logs, applique les filtres et génère les statistiques.
+ */
 void RequestFilter::browseFile() {
   if (hour != -1) {
     cout << "Warning : prise en compte des logs entre " << hour << "h et "
@@ -73,7 +76,13 @@ void RequestFilter::browseFile() {
   statistics.Top10();
 } //----- Fin de browseFile
 
+/**
+ * Vérifie si l'URL correspond à un fichier interdit (images, CSS, JS).
+ * @param url URL à vérifier.
+ * @return true si l'URL est interdite, false sinon.
+ */
 bool RequestFilter::IsForbiddenFile(const string &url) const {
+  // Vérification si l'URL se termine par une extension interdite en comparant la fin de la chaîne
   static const string extensions[] = {".jpeg", ".gif", ".jpg",
                                       ".png",  ".css", ".js"};
 
@@ -86,6 +95,10 @@ bool RequestFilter::IsForbiddenFile(const string &url) const {
   return false;
 }
 
+/**
+ * Ajoute une requête aux statistiques si elle passe tous les filtres.
+ * @param requestToFilter Requête à filtrer et ajouter.
+ */
 void RequestFilter::AddRequest(const Request &requestToFilter) {
   bool passesFilters = true;
 
@@ -99,7 +112,7 @@ void RequestFilter::AddRequest(const Request &requestToFilter) {
   // Appliquer le filtre horaire (seulement si les filtres précédents sont
   // passés)
   if (hour != -1 && passesFilters) {
-    // Le filtre horaire est pour une heure donnée, donc de [hour, hour+1[
+    // Filtre horaire : accepte seulement les requêtes dans l'intervalle [hour, hour+1[
     if (!((requestToFilter.hour >= hour) &&
           (requestToFilter.hour < (hour + 1)))) {
       passesFilters = false;
@@ -117,6 +130,14 @@ void RequestFilter::AddRequest(const Request &requestToFilter) {
 //-------------------------------------------- Constructeurs - destructeur
 
 // Implémentation du constructeur (déplacée du .h pour une meilleure pratique)
+/**
+ * Constructeur de la classe RequestFilter.
+ * @param logFileName Nom du fichier de logs.
+ * @param dotFileName Nom du fichier DOT pour le graphe.
+ * @param graphFilter Indicateur pour générer le graphe.
+ * @param imageFilter Indicateur pour exclure les images.
+ * @param hourFilter Heure pour le filtre horaire (-1 si aucun).
+ */
 RequestFilter::RequestFilter(const string &logFileName,
                              const string &dotFileName, const bool graphFilter,
                              const bool imageFilter, const int hourFilter)
@@ -127,6 +148,9 @@ RequestFilter::RequestFilter(const string &logFileName,
 #endif
 }
 
+/**
+ * Destructeur de la classe RequestFilter.
+ */
 RequestFilter::~RequestFilter()
 // Algorithme :
 //

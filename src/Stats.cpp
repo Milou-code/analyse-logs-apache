@@ -20,7 +20,12 @@ using namespace std;
 
 //----------------------------------------------------------------- PUBLIC
 
+/**
+ * Génère un fichier DOT représentant le graphe des références entre URLs.
+ * @param dotFileName Nom du fichier DOT à créer.
+ */
 void Stats::CreateGraph(const string &dotFileName) const {
+  // Algorithme de génération du graphe DOT : collecte des nœuds uniques et écrit les arcs avec les compteurs de hits
   string filePath = dotFileName;
   streambuf *coutBuffer = cout.rdbuf(); // sert à sauvegarder pour réutiliser le terminal plus tard
   ofstream dotFile(filePath);
@@ -69,6 +74,9 @@ void Stats::CreateGraph(const string &dotFileName) const {
             << endl;
 } //----- Fin de CreateGraph
 
+/**
+ * Affiche le top 10 des URLs les plus visitées.
+ */
 void Stats::Top10() const {
 
   map<string, int>
@@ -94,6 +102,7 @@ void Stats::Top10() const {
 
   sort(sortedHits.begin(),
             sortedHits.end(), // on trie les URL par ordre décroissant de hits
+            // Tri des URLs par nombre de hits décroissant en utilisant une fonction lambda pour comparer les paires
             [](const pair<string, int> &a,
                const pair<string, int> &b) {
               if (a.second != b.second)
@@ -112,8 +121,14 @@ void Stats::Top10() const {
 
 } //----- Fin de Top10
 
+/**
+ * Ajoute une requête aux statistiques en incrémentant le compteur pour la paire (referer, target).
+ * @param refererURL URL de provenance.
+ * @param targetURL URL cible.
+ */
 void Stats::AddRequest(const string &refererURL,
                        const string &targetURL) {
+  // Architecture utilisant une map imbriquée pour compter les hits par paire (referer, target)
   {
     if (targetCollection.find(targetURL) ==
         targetCollection.end()) // target n'existe pas encore
@@ -140,6 +155,9 @@ void Stats::AddRequest(const string &refererURL,
 
 //---------------------------------------------------------- Constructeur
 
+/**
+ * Constructeur de la classe Stats.
+ */
 Stats::Stats() : targetCollection() {
 
 #ifdef MAP
@@ -150,6 +168,9 @@ Stats::Stats() : targetCollection() {
 
 //------------------------------------------------------------ Destructeur
 
+/**
+ * Destructeur de la classe Stats.
+ */
 Stats::~Stats() {
 
 #ifdef MAP

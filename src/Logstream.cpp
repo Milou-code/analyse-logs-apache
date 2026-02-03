@@ -23,8 +23,14 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
+/**
+ * Parse une ligne de log Apache et retourne un objet Request.
+ * @param logLine Ligne de log à parser.
+ * @return Objet Request contenant les informations extraites.
+ */
 Request Logstream::NextLog(const string& logLine)
 {
+    // Algorithme de parsing manuel des champs de la ligne de log Apache en utilisant find et substr pour extraire chaque partie
     // Variables pour stocker les données parsées
     string ip;
     string userLogname;
@@ -120,6 +126,7 @@ Request Logstream::NextLog(const string& logLine)
 
         // Extraire seulement le chemin de l'URL du référent
         if (refererURL != "-") {
+            // Extraction du chemin de l'URL du référent en supprimant le protocole et le domaine pour ne garder que le chemin
             size_t protocol_end = refererURL.find("://");
             size_t path_start = std::string::npos;
 

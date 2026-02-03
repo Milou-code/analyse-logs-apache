@@ -23,6 +23,21 @@ using namespace std;
 //} //----- Fin de Méthode
 
 //-------------------------------------------- Constructeurs - destructeur
+/**
+ * Constructeur de la classe Request.
+ * Initialise une requête avec les informations fournies.
+ * @param anIP Adresse IP du client.
+ * @param aUserLogName Nom d'utilisateur distant.
+ * @param anAutentificatedUser Utilisateur authentifié.
+ * @param anAnswerLength Taille de la réponse.
+ * @param aBrowser Navigateur utilisé.
+ * @param aDate Date de la requête.
+ * @param anHour Heure de la requête.
+ * @param aRefererURL URL de provenance.
+ * @param aReturnCode Code de retour HTTP.
+ * @param aTargetURL URL cible de la requête.
+ * @param anActionType Type d'action (GET, POST, etc.).
+ */
 Request::Request(const string &anIP, const string &aUserLogName,
                  const string &anAutentificatedUser, const string &anAnswerLength,
                  const string &aBrowser, const string &aDate, const string &anHour,
@@ -49,6 +64,12 @@ Request::~Request() {
 } //----- Fin de Request
 
 //------------------------------------------------- Surcharge d'opérateurs
+/**
+ * Surcharge de l'opérateur << pour afficher une Request.
+ * @param os Flux de sortie.
+ * @param request Objet Request à afficher.
+ * @return Référence au flux de sortie.
+ */
 std::ostream &operator<<(std::ostream &os, const Request &request) {
   os << "IP: " << request.IP << std::endl
      << "User Logname: " << request.userLogname << std::endl
