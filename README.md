@@ -15,8 +15,8 @@ L'objectif principal est de fournir des statistiques de consultation et de visua
 ## Architecture logicielle
 Le projet s'appuie sur une conception orientée objet :
 * **`Request`** : Modélise une ligne de log avec ses différents attributs (IP, date, URL, etc.).
-* **`Logstream`** : Gère la lecture du fichier et le découpage (parsing) des lignes de logs.
-* **`RequestFilter`** : Applique les critères de sélection (heure, extensions) avant traitement.
+* **`Logstream`** : Gère le découpage (parsing) des lignes de logs.
+* **`RequestFilter`** : Gère la lecture du fichier et applique les critères de sélection (heure, extensions) avant traitement.
 * **`Stats`** : Stocke les données dans une structure de type `map` et génère les sorties (Top 10 ou fichier DOT).
 
 ## Installation et Utilisation
